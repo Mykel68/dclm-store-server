@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 require("dotenv").config();
+const authRoutes = require("./routes/authRoutes");
 const Sequelize = require("sequelize");
 const PORT = process.env.PORT || 5000;
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
@@ -16,9 +17,14 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     idle: dbConfig.pool.idle,
   },
 });
+
 const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
+app.use(cors());
+app.use(express.json());
+app.use("/api/auth", authRoutes);
+
 db.sequelize
   .authenticate()
   .then(() => {
@@ -31,5 +37,3 @@ db.sequelize
   .catch((error) => {
     console.error("Unable to connect to the database:", error);
   });
-app.use(cors());
-app.use(express.json());

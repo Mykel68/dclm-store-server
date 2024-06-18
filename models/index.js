@@ -1,4 +1,4 @@
-const dbConfig = require("./config/dbConfig");
+const dbConfig = require("../config/dbConfig");
 const Sequelize = require("sequelize");
 const { DataTypes } = Sequelize;
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
@@ -12,19 +12,14 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   },
 });
 
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log("Connected to the database successfully!");
-  })
-  .catch((err) => {
-    console.log("Unable to connect to the database:", err);
-  });
-
 const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.User = require("./userModel")(sequelize, DataTypes);
+
+db.sequelize.sync({ alter: true }).then(() => {
+  console.log("Drop and re-sync db.");
+});
 
 module.exports = db;
