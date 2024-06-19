@@ -17,10 +17,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    item_count: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
   });
   return Product;
 };
