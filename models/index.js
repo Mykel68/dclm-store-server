@@ -17,6 +17,7 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.User = require("./userModel")(sequelize, DataTypes);
+db.Product = require("./productModel")(sequelize, DataTypes);
 
 db.sequelize.sync({ alter: true }).then(() => {
   console.log("Drop and re-sync db.");
