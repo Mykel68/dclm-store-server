@@ -8,6 +8,7 @@ const app = express();
 require("dotenv").config();
 const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
+const storeItemRoutes = require("./routes/storeItemRoutes");
 const Sequelize = require("sequelize");
 const PORT = process.env.PORT || 5000;
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
@@ -28,6 +29,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/store-items", storeItemRoutes);
 
 const swaggerOptions = {
   swaggerDefinition: {
